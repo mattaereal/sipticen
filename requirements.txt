@@ -1,0 +1,9 @@
+logging
+scapy
+glob
+subprocess
+shlex
+argparse
+pyshark
+socket
+lxml
