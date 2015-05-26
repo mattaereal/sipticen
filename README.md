@@ -1,5 +1,5 @@
-# cdd-project
-Simple tool for packet tracing inside a Core emulated environment.
+# SIPTICEN
+**Si**mple **P**acket **T**racking **i**n **C**ORE **E**mulated **N**etworks
 
 # Installation
 1. First you need to have *pip2* previously installed.
