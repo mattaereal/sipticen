@@ -57,31 +57,32 @@ def checkDependencies(check=True):
     confirmation on whether to install it with a specific version or not.
 
     """
-    if check:
-        modules = []
-        f = open(CONST_REQUIREMENTS_FILE)
-        for line in f:
-            if line.find('#'):
-                modules.append(line)
-                #modules.append([line[:line.index('=')], (line[line.index('=')+2:]).strip()])
-        f.close()
+    modules = []
+    f = open(CONST_REQUIREMENTS_FILE)
+    for line in f:
+        if line.find('#'):
+            modules.append(line)
+            #modules.append([line[:line.index('=')], (line[line.index('=')+2:]).strip()])
+    f.close()
 
-        for module in modules:
-            module = module.strip()
-            try:
-                __import__(module)
-            except ImportError:          
-                if query_user_bool("Missing module %s." \
-                    " Do you wish to install it?" % module):
-                    subprocess.call(["pip2", "install", module])
-                    
-                else:
-                    return False
+    for module in modules:
+        module = module.strip()
+        try:
+            __import__(module)
+        except ImportError:          
+            if query_user_bool("Missing module %s." \
+                " Do you wish to install it?" % module):
+                subprocess.call(["pip2", "install", module])
+                
+            else:
+                return False
 
     return True
 
 if __name__ == '__main__':
     try:
-        checkDependencies()
+        if not checkDependencies():
+            sys.exit("[!] Dependencies not met.")
+        sys.stdout.write("[+] Dependencies met.\n")
     except OSError:
         sys.stdout.write("pip2 must be installed\n")

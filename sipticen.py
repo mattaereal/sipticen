@@ -45,7 +45,7 @@ def getParserArgs():
     """
 
     parser = argparse.ArgumentParser(
-        description="Matt's final project for CCDD I & II.",
+        description="Matt's final project for CDD I & II.",
         fromfile_prefix_chars='@')
 
     parser_merge = parser.add_argument_group('merge')
@@ -74,13 +74,13 @@ def getParserArgs():
     parser_search.add_argument('-f', '--file',
         action='store',
         default=None,
-        help='Merged pcap file.')
+        help='PcapNG file.')
     parser_search.add_argument('-s', '--src',
         action='store',
-        help='Source address.')
+        help='Source IPv4 address.')
     parser_search.add_argument('-d', '--dst', 
         action='store',
-        help='Destination address.')
+        help='Destination IPv4 address.')
     parser_search.add_argument('-i', '--ip-id', 
         action='store',
         default=None,
@@ -96,7 +96,7 @@ def getParserArgs():
     parser_search.add_argument('--print-readable', 
         action='store_true',
         default=False,
-        help='Prints pakets in a redable format')
+        help='Prints packets in a readable format. Warning: Flooding.')
 
     parser_icmp = parser.add_argument_group('icmp')
     parser_icmp.add_argument('--icmp',
@@ -175,8 +175,8 @@ def mfilter(pkt):
     """
     opts = (args.tcp, args.icmp, args.udp, bool(args.ip_id)).count(True)
     if opts == 0:
-        sys.exit("[!] Exiting: Must specify at least one protocol ICMP/TCP/UDP \
-        for the filter or the IP identification number.\n")
+        sys.exit("[!] Exiting: Must specify at least one protocol ICMP/TCP/UDP"
+        " for the filter or the IP identification number.\n")
 
     protos = (args.tcp, args.icmp, args.udp).count(True)
     if protos > 1:
@@ -342,7 +342,10 @@ if __name__ == '__main__':
         merge(args.pread, args.pwrite)
         
     if args.search:
-        search(args.file)
+        if args.file:
+            search(args.file)
+        else:
+            sys.exit("[!] No input capture detected.")
 
     if args.parse:
         parseTop(args.parse)
