@@ -2,21 +2,21 @@
 **Si**mple **P**acket **T**racking **i**n **C**ORE **E**mulated **N**etworks
 
 # Installation
-1. First you need to have *pip2* previously installed.
+1. First you need to have **pip2** previously installed.
 
-  Debian based:
+  **Debian based:**
   
   `$ sudo apt-get install python-pip`
 
-  Arch linux:
+  **Arch linux:**
   
   `$ sudo pacman -S python2-pip`
   
-  CentOS / RHEL / Fedora
+  **CentOS / RHEL / Fedora**
   
   `$ sudo yum install python-pip`
   
-  Generic
+  **Generic**
   
   `$ curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python2.7`
 
