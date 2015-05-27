@@ -1,6 +1,10 @@
 # SIPTICEN
 **Si**mple **P**acket **T**racking **i**n **C**ORE **E**mulated **N**etworks
 
+*This tool was made as a final project for Data Communication I and II from UNICEN, Tandil, Argentina.*
+
+[Here's the link to the official project document (spanish)](https://docs.google.com/document/d/1HbZvZ77IhtSvhVqXkAxqf3R0vytGIzPtTb3nbirNH58/edit?usp=sharing)
+
 # Installation
 1. First you need to have **pip2** previously installed.
 
