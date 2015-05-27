@@ -5,15 +5,19 @@
 1. First you need to have *pip2* previously installed.
 
   Debian based:
+  
   `$ sudo apt-get install python-pip`
 
   Arch linux:
+  
   `$ sudo pacman -S python2-pip`
   
   CentOS / RHEL / Fedora
+  
   `$ sudo yum install python-pip`
   
   Generic
+  
   `$ curl https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py | python2.7`
 
 2. You have to check if all the dependencies are met using the following script:
