@@ -1,9 +1,69 @@
 # SIPTICEN
 **Si**mple **P**acket **T**racking **i**n **C**ORE **E**mulated **N**etworks
 
-*This tool was made as a final project for Data Communication I and II from UNICEN, Tandil, Argentina.*
+*Made as a University final project for UNICEN, Tandil, Argentina.*
 
 [Here's the link to the official project document (spanish)](https://docs.google.com/document/d/1HbZvZ77IhtSvhVqXkAxqf3R0vytGIzPtTb3nbirNH58/edit?usp=sharing)
+
+# About
+
+This tool was developed as a result of a final project for the chair Data Communication (I & II) of the university of Tandil [**UNICEN**](exa.unicen.edu.ar), Buenos Aires, Argentina.
+
+Its purpose is to perform and convey an analysis of a network capture (**PcapNG**), obtained from a [**CORE**](http://www.nrl.navy.mil/itd/ncs/products/core) (Common Research Emulator) Network Topology, showing the results in the most possible human-redable way.
+
+**Core topology sample screenshot**
+![alt text][core-topology]
+
+[core-topology]: https://i.imgur.com/MFbSrwv.png "Core topology sample"
+
+### How
+
+The interesting thing here, is that by using this tool you will be able to trace back a specified IP datagram through the network by applying filters of your desire.
+
+You can start by applying common filters like source IP address - destination IP address, if it's TCP/UDP/ICMP, source port - destination port, etc. When you reduced your search to what you expected, you can trigger the trace flag in order to see how, when and where that packet/s traveled across the network's topology.
+
+# Before installing
+
+Since the main purpose of the tool is based over a **PcapNG** capture, you may use the ones provided in the sample folder **`misc/pcaps/`**, or make one yourself.
+
+In order to get a capture from all the emulated **CORE** topology, you can do it manually via Wireshark gui by starting the capture on the *any* interface.
+
+But here it is an *alternative* for the ones who rather prefer doing it by cli, or using *tshark*.
+
+### Listing all interfaces
+```
+matt@cdd% tshark -D
+1. eth0
+2. nflog
+3. nfqueue
+4. n1.eth0.231
+5. n1.eth1.231
+6. n1.eth2.231
+7. n2.eth0.231
+8. n2.eth1.231
+9. n2.eth2.231
+10. n3.eth0.231
+11. n3.eth1.231
+12. b.4.35947
+13. n5.eth0.231
+14. n6.eth0.231
+15. n7.eth0.231
+16. n8.eth0.231
+17. n9.eth0.231
+18. b.908.35947
+19. b.5688.35947
+20. b.17756.35947
+21. b.37909.35947
+22. b.52969.35947
+23. any
+24. lo (Loopback)
+```
+
+### Capturing on *any*
+```
+matt@cdd% tshark -i any -w captura.pcapng -F pcapng
+Capturing on 'any'
+```
 
 # Installation
 1. First you need to have **pip2** previously installed.
@@ -142,6 +202,61 @@ udp:
 
 # Usage examples
 
+## English
+The captures being used can be found in the folder misc/pcaps.
+
+The sample topology in xml format is also inside misc/core.
+
+### ICMP
+* Simple search filter between 2 hosts:
+
+`$ ./sipticen.py -f dump4.pcapng --search --src 10.0.4.20 --dst 10.0.5.10 --icmp`
+
+* Search with identification field filter:
+
+`$ ./sipticen.py -f dump4.pcapng --search --src 10.0.4.20 --dst 10.0.5.10 --icmp --icmp-ident 28`
+
+* Previous search but hiding broadcast ifaces:
+
+`$ ./sipticen.py -f dump4.pcapng --search --src 10.0.4.20 --dst 10.0.5.10 --icmp --icmp-ident 28 --hide-bcast`
+
+### UDP
+ * Search with UDP protocol filter:
+
+`$ ./sipticen.py -f dump3.pcapng --search --src 192.168.1.103 --dst 91.189.89.199 --udp --udp-proto NTP`
+
+* Search with port filter:
+
+`$ ./sipticen.py -f dump3.pcapng --search --src 192.168.1.103 --dst 200.49.130.41 --udp --udp-port 53`
+
+### TCP
+* Search with TCP protocol filter:
+
+`$ ./sipticen.py -f dump3.pcapng --search --src 192.168.1.103 --dst 91.189.90.41 --tcp --tcp-proto HTTP`
+
+* Search with port filter:
+
+`$ ./sipticen.py -f dump3.pcapng --search --src 192.168.1.103 --dst 91.189.90.41 --tcp --tcp-port 80`
+
+### Tracing
+* Displaying the route of a packet through the current network topology:
+
+`$ ./sipticen.py -f dump4.pcapng --search --src 10.0.4.20 --dst 10.0.5.10 --icmp --ip-id 16034 --trace --hide-bcast`
+
+* With different packets from any protocol that satisfy the criteria:
+
+`$ ./sipticen.py -f dump4.pcapng --search --src 10.0.4.20 --dst 10.0.5.10 --icmp --trace --hide-bcast`
+
+### Print readable
+You can add a way of printing in a humanly legible way the information of each layer, for each packet, from the previously shown filters.
+
+`$ ./sipticen.py -f dump3.pcapng --search --src 192.168.1.103 --dst 91.189.90.41 --tcp --tcp-proto HTTP --ip-id 43084 --print-readable`
+
+### CORE
+* Parsing and displaying basic topology information:
+
+`$ ./sipticen.py --parse misc/core/topology_sample.xml `
+
 ## Spanish
 Las capturas que se usarán pueden encontrarse en la carpeta misc/pcaps/.
 Lo mismo con la estructura de la topología en formato xml, dentro de misc/core/.
@@ -195,12 +310,18 @@ A cualquiera de las anteriores combinaciones se le puede agregar la manera de im
 * Parseando y mostrando información básica de la topología ejemplo:
 
 `$ ./sipticen.py --parse misc/core/topology_sample.xml `
-                                                           
 
-# Comentarios.
 
-El código actualmente se encuentra subido a github, bajo la licencia MIT, en dónde se puede clonar sin problema usando git, ya que es público, y parte de esta documentación será agregada eventualmente para que esté al acceso de todos.
+# Comentarios (spanish)
+
+Como se puede ver el código actualmente se encuentra subido a github, bajo la licencia MIT, en dónde se puede clonar sin problema usando git, ya que es de acceso público.
 
 En principio se había comenzado a desarrollar la herramienta utilizando **Scapy**, pero las problemáticas que posee al no poder utilizar el formato de captura **PcapNG** hicieron que sea limitante el uso del mismo. El formato **PcapNG** posee determinados metadatos que eran fundamentales para la realización de este trabajo, como por ejemplo la identificación de cada interfaz en donde fué tomada la captura dentro de cada frame.
 
 Se utilizó **PyShark** como alternativa a **Scapy**, pero éste también presentaba limitaciones. El módulo hace un llamado (subprocess.call) al binario **tshark** con la captura, y éste devuelve un **XML** en formato **PSML** (Packet Summary Markup Language). Por ende era imposible obtener el formato **RAW** de cada paquete, para poder guardar una selección de ellos en una captura aparte. Es por ello que se agregó la opción **--print-readable** como una alternativa más para observar los paquetes.
+
+# Observations (english)
+
+In the beggining of the development of the tool, the core module being used was **Scapy**, but starting from the fact that **Scapy** can't work with PcapNG files, which are a prerequisite for this to work (since PcapNG saves metadata on each packet which is totally necessary, such as the interface id on where the frame was captured), made me rethink of using another one. 
+
+So I switched to **PyShark** as an alternative, but this module also had a few limitations. **PyShark** makes a *subprocess.call* to the binary **tshark** with the capture, and this returns an **XML** in **PSML** (Packet Summary Markup Language) format. And it also did not have a way to save a list of desired packets to a new capture file. Thus, it was impossible for me to save a selection of packets to disk, neither patch the parser in runtime to get the **RAW** format of each packet to manually save them. So as a workaraound I decided to use the flag **--print-readable** as an option to see the detailed packet information in text.
