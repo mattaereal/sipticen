@@ -12,7 +12,6 @@ import logging
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 
 from TopologyParser import TopologyParser as TpScan
-from scapy.all import *
 from glob import glob
 import subprocess
 import shlex
