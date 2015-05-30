@@ -61,22 +61,20 @@ def checkDependencies(check=True):
     f = open(CONST_REQUIREMENTS_FILE)
     for line in f:
         if line.find('#'):
-            modules.append(line)
-            #modules.append([line[:line.index('=')], (line[line.index('=')+2:]).strip()])
+            modules.append([line[:line.index('=')], (line[line.index('=')+2:]).strip()])
     f.close()
 
     for module in modules:
-        module = module.strip()
         try:
-            __import__(module)
+            __import__(module[0])
         except ImportError:          
             if query_user_bool("Missing module %s." \
-                " Do you wish to install it?" % module):
-                subprocess.call(["pip2", "install", module])
+                    " Do you wish to install it?" % module[0]):
+                    subprocess.call(["pip2", "install", "%s==%s" %
+                                    (module[0], module[1])])
                 
             else:
                 return False
-
     return True
 
 if __name__ == '__main__':
