@@ -96,12 +96,20 @@ Capturing on 'any'
 
 `# pip2 install virtualenv`
 
-3. Activate the virtual environment from the project:
+3. Inside the project create a virtualenv:
+
+`# virtualenv venv`
+
+4. Activate the virtual environment from the project:
 
 `# source venv/bin/activate`
 
-4. Run sipticen as shown below.
-5. Deactivate the virtual env by typing:
+5. Install the requirements via pip2 inside the virtualenv.
+
+`(venv)# pip2 install -r requirements.txt`
+
+6. Run sipticen as shown on the sections below.
+7. Deactivate the virtual env by typing:
 
 `# deactivate`
 
