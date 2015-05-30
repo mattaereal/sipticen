@@ -66,7 +66,7 @@ Capturing on 'any'
 ```
 
 # Installation
-1. First you need to have **pip2** previously installed.
+1. First you need to have **pip2** previously installed and the latest version of wireshark ( latest stable is 1.12.5):
 
   **Debian based:**
   
@@ -89,6 +89,21 @@ Capturing on 'any'
   `python2 check_deps.py`
 
 3. And after that everything should be set for using the tool.
+
+## Alternative installation
+1. Install **pip2** as before.
+2. Install virtualenv via pip2:
+
+`# pip2 install virtualenv`
+
+3. Activate the virtual environment from the project:
+
+`# source venv/bin/activate`
+
+4. Run sipticen as shown below.
+5. Deactivate the virtual env by typing:
+
+`# deactivate`
 
 # Tool help
 
