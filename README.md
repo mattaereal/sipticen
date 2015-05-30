@@ -93,24 +93,15 @@ Capturing on 'any'
 ## Alternative installation
 1. Install **pip2** as before.
 2. Install virtualenv via pip2:
-
 `# pip2 install virtualenv`
-
 3. Inside the project create a virtualenv:
-
 `# virtualenv venv`
-
 4. Activate the virtual environment from the project:
-
 `# source venv/bin/activate`
-
 5. Install the requirements via pip2 inside the virtualenv.
-
 `(venv)# pip2 install -r requirements.txt`
-
 6. Run sipticen as shown on the sections below.
 7. Deactivate the virtual env by typing:
-
 `# deactivate`
 
 # Tool help
